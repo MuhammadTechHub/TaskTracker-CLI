@@ -1,27 +1,25 @@
 ﻿using TaskTracker_CLI.Services;
 
-public class Program
+var service = new TaskService();
+
+Console.WriteLine("1 - Add task");
+Console.WriteLine("2 - Show tasks");
+
+var input = Console.ReadLine();
+
+if (input == "1")
 {
-    public static void Main(string[] args)
+    Console.Write("Enter title: ");
+    var title = Console.ReadLine();
+
+    service.Add(title!);
+}
+else if (input == "2")
+{
+    var tasks = service.GetAll();
+
+    foreach (var task in tasks)
     {
-        var service = new TaskService();
-
-        if (args.Length == 0)
-        {
-            Console.WriteLine("No command provided");
-            return;
-        }
-
-        var command = args[0];
-
-        switch (command)
-        {
-            case "add":
-                service.Add(args[1]);
-                break;
-            default:
-                Console.WriteLine("Unknown command");
-                break;
-        }
+        Console.WriteLine($"{task.Id}. {task.Title} - {(task.IsCompleted ? "Done" : "Pending")}");
     }
 }

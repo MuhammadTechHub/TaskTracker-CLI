@@ -5,28 +5,54 @@ namespace TaskTracker_CLI.Services;
 
 public class TaskService
 {
-    private readonly JsonStorage storage = new JsonStorage();
+    private readonly FileStorage _storage;
 
-    public void Add(string description)
+    public TaskService()
     {
-        var tasks = storage.Load();
-
-        int newId = tasks.Count == 0 ? 1 : tasks.Max(t => t.Id) + 1;
-
-        var task = new TaskItem
-        {
-            Id = newId,
-            Description = description,
-            Status = "todo",
-            CreatedAt = DateTime.Now,
-            UpdatedAt = DateTime.Now
-        };
-
-        tasks.Add(task);
-        storage.Save(tasks);
-
-        Console.BackgroundColor = ConsoleColor.Green;
-        Console.WriteLine($"Task added: (ID: {newId})");
+        _storage = new FileStorage();
     }
 
+    public List<TaskItem> GetAll()
+    {
+        return _storage.LoadTasks();
+    }
+
+    public void Add(string title)
+    {
+        var tasks = _storage.LoadTasks();
+
+        var newTask = new TaskItem
+        {
+            Id = tasks.Count > 0 ? tasks.Max(t => t.Id) + 1 : 1,
+            Title = title,
+            IsCompleted = false
+        };
+
+        tasks.Add(newTask);
+        _storage.SaveTasks(tasks);
+    }
+
+    public void Delete(int id)
+    {
+        var tasks = _storage.LoadTasks();
+
+        var task = tasks.FirstOrDefault(t => t.Id == id);
+        if (task != null)
+        {
+            tasks.Remove(task);
+            _storage.SaveTasks(tasks);
+        }
+    }
+
+    public void MarkDone(int id)
+    {
+        var tasks = _storage.LoadTasks();
+
+        var task = tasks.FirstOrDefault(t => t.Id == id);
+        if (task != null)
+        {
+            task.IsCompleted = true;
+            _storage.SaveTasks(tasks);
+        }
+    }
 }
