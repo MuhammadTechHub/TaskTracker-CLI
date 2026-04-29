@@ -2,30 +2,14 @@ using System.Text.Json;
 using TaskTracker_CLI.Models;
 
 namespace TaskTracker_CLI.Storage;
-
 public class FileStorage
 {
     private readonly string _filePath = "Data/tasks.json";
+    private List<TaskItem> listTasks;
 
-    public List<TaskItem> LoadTasks()
+    public void Save(Task taskItem)
     {
-        if (!File.Exists(_filePath))
-        {
-            return new List<TaskItem>();
-        }
-
-        var json = File.ReadAllText(_filePath);
-
-        if (string.IsNullOrWhiteSpace(json))
-            return new List<TaskItem>();
-
-        return JsonSerializer.Deserialize<List<TaskItem>>(json)
-               ?? new List<TaskItem>();
-    }
-
-    public void SaveTasks(List<TaskItem> tasks)
-    {
-        var json = JsonSerializer.Serialize(tasks, new JsonSerializerOptions
+        var json = JsonSerializer.Serialize(taskItem, new JsonSerializerOptions
         {
             WriteIndented = true
         });
