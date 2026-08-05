@@ -1,11 +1,33 @@
-namespace TaskTracker_CLI.Services;
 using TaskTracker_CLI.Models;
+
+namespace TaskTracker_CLI.Services;
+
 public class TaskService
 {
-    public void AddTask(string taskName, string? Description = null, string Status = "toDo")
+    private static List<TaskItem> tasks = new List<TaskItem>();
+
+    public TaskItem AddTask(string description)
     {
-        // Implementation for adding a task
-        // var taskItem = new TaskItem { Name = taskName, Description = Description, Status = Status };
-        // taskItem.CreatedAt = DateTime.Now;
+        var task = new TaskItem(description);
+        tasks.Add(task);
+        return task;
+    }
+
+    public List<TaskItem> GetAllTasks() => tasks;
+
+    public TaskItem? GetTaskById(int id) =>
+        tasks.FirstOrDefault(task => task.Id == id);
+
+    public bool DeleteTask(int id)
+    {
+        var task = GetTaskById(id);
+
+        if (task != null)
+        {
+            tasks.Remove(task);
+            return true;
+        }
+
+        return false;
     }
 }
