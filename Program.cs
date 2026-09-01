@@ -1,90 +1,56 @@
-﻿using TaskTracker_CLI.Services;
-using TaskTracker_CLI.Models;
+﻿
+using TaskTracker_CLI.Services;
 
-public class Program
+class Program
 {
     static void Main(string[] args)
     {
-        if (args.Length == 0)
-        {
-            Console.WriteLine("No command provided.");
-            return;
-        }
-
         var taskService = new TaskService();
 
+        if (args.Length == 0)
+        {
+            Console.WriteLine("Please provide a command: 'add' or 'list'.");
+            return;
+        }
         switch (args[0])
         {
             case "add":
-
-                if (args.Length != 2)
+                if (args.Length < 2)
                 {
                     Console.WriteLine("Please provide a task description.");
                     return;
                 }
 
-                TaskItem task = taskService.AddTask(args[1]);
-                Console.WriteLine($"Task '{task.Description}' (ID: {task.Id}) added successfully.");
+                int taskId = taskService.AddTask(args[1]);
+                Console.WriteLine($"Task added successfully (ID: {taskId}).");
                 break;
 
-            case "list":
-
-                List<TaskItem> tasks = taskService.GetAllTasks();
-                
-                if (tasks.Count == 0)
+            case "update":
+                if (args.Length < 3)
                 {
-                    Console.WriteLine("No tasks found.");
-                }
-                else
-                {
-                    foreach (var t in tasks)
-                    {
-                        Console.WriteLine($"ID: {t.Id}, Description: {t.Description}, Status: {t.Status}, Created At: {t.CreatedAt}, Updated At: {t.UpdatedAt}");
-                    }
-                }
-                break;
-            
-            case "delete":
-
-                if (args.Length != 2 || !int.TryParse(args[1], out int taskId))
-                {
-                    Console.WriteLine("Please provide a valid task ID to delete.");
+                    Console.WriteLine("Please provide a task ID and a new description.");
                     return;
                 }
 
-                bool isDeleted = taskService.DeleteTask(taskId);
-                
-                if (isDeleted)
+                if (!int.TryParse(args[1], out int foundTaskId))
                 {
-                    Console.WriteLine($"Task with ID {taskId} deleted successfully.");
-                }
-                else
-                {
-                    Console.WriteLine($"Task with ID {taskId} not found.");
-                }
-                break;
-
-            case "get":
-
-                if (args.Length != 2 || !int.TryParse(args[1], out int getTaskId))
-                {
-                    Console.WriteLine("Please provide a valid task ID to retrieve.");
+                    Console.WriteLine("Invalid task ID. Please provide a valid integer.");
                     return;
                 }
 
-                TaskItem? retrievedTask = taskService.GetTaskById(getTaskId);
-                if (retrievedTask != null)
+                try
                 {
-                    Console.WriteLine($"ID: {retrievedTask.Id}, Description: {retrievedTask.Description}, Status: {retrievedTask.Status}, Created At: {retrievedTask.CreatedAt}, Updated At: {retrievedTask.UpdatedAt}");
+                    int updatedTaskId = taskService.UpdateTask(foundTaskId, args[2]);
+                    Console.WriteLine($"Task updated successfully (ID: {updatedTaskId}).");
                 }
-                else
+                catch (ArgumentException ex)
                 {
-                    Console.WriteLine($"No task found with ID {getTaskId}.");
+                    Console.WriteLine(ex.Message);
                 }
                 break;
 
             default:
-                Console.WriteLine("Invalid command. Use 'add <task description>' to add a task.");
+                Console.WriteLine("Invalid command. Use 'add' or 'list'.");
                 break;
         }
     }

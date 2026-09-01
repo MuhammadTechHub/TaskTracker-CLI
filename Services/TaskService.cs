@@ -1,33 +1,52 @@
 using TaskTracker_CLI.Models;
+using TaskTracker_CLI.StorageBroker;
 
 namespace TaskTracker_CLI.Services;
 
 public class TaskService
 {
-    private static List<TaskItem> tasks = new List<TaskItem>();
+    private readonly string filePath = "tasks.json";
+    private readonly IJsonTaskRepository taskRepository;
+    private List<TaskItem> tasks;
 
-    public TaskItem AddTask(string description)
+    public TaskService()
     {
-        var task = new TaskItem(description);
-        tasks.Add(task);
-        return task;
+        this.taskRepository = new JsonTaskRepository();
+        this.tasks = taskRepository.GetAllTasks(filePath);
     }
 
-    public List<TaskItem> GetAllTasks() => tasks;
-
-    public TaskItem? GetTaskById(int id) =>
-        tasks.FirstOrDefault(task => task.Id == id);
-
-    public bool DeleteTask(int id)
+    public int AddTask(string description)
     {
-        var task = GetTaskById(id);
+        TaskItem newTask = new TaskItem(description);
+        int maxId = 0;
 
-        if (task != null)
+        foreach (var task in tasks)
         {
-            tasks.Remove(task);
-            return true;
+            if (task.Id > maxId)
+            {
+                maxId = task.Id;
+            }
         }
 
-        return false;
+        newTask.Id = maxId + 1;
+        tasks.Add(newTask);
+        taskRepository.SaveTasks(filePath, tasks);
+        return newTask.Id;
+    }
+
+    public int UpdateTask(int foundTaskId, string newDescription)
+    {
+        foreach (var task in tasks)
+        {
+            if (foundTaskId == task.Id)
+            {
+                task.Description = newDescription;
+                task.UpdatedAt = DateTimeOffset.Now;
+                taskRepository.SaveTasks(filePath, tasks);
+                return task.Id;
+            }
+        }
+
+        throw new ArgumentException($"Task with ID {foundTaskId} not found.");
     }
 }
