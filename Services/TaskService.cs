@@ -34,11 +34,11 @@ public class TaskService
         return newTask.Id;
     }
 
-    public int UpdateTask(int foundTaskId, string newDescription)
+    public int UpdateTask(int currentTaskId, string newDescription)
     {
         foreach (var task in tasks)
         {
-            if (foundTaskId == task.Id)
+            if (currentTaskId == task.Id)
             {
                 task.Description = newDescription;
                 task.UpdatedAt = DateTimeOffset.Now;
@@ -47,6 +47,21 @@ public class TaskService
             }
         }
 
-        throw new ArgumentException($"Task with ID {foundTaskId} not found.");
+        throw new ArgumentException($"Task with ID {currentTaskId} not found.");
+    }
+
+    public int DeleteTask(int currentTaskId)
+    {
+        for (int i = 0; i < tasks.Count; i++)
+        {
+            if (currentTaskId == tasks[i].Id)
+            {
+                tasks.RemoveAt(i);
+                taskRepository.SaveTasks(filePath, tasks);
+                return currentTaskId;
+            }
+        }
+
+        throw new ArgumentException($"Task with ID {currentTaskId} not found.");
     }
 }

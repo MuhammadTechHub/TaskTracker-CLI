@@ -49,6 +49,30 @@ class Program
                 }
                 break;
 
+            case "delete":
+                if (args.Length < 2)
+                {
+                    Console.WriteLine("Please provide a task ID to delete.");
+                    return;
+                }
+
+                if (!int.TryParse(args[1], out int deleteTaskId))
+                {
+                    Console.WriteLine("Invalid task ID. Please provide a valid integer.");
+                    return;
+                }
+
+                try
+                {
+                    int deletedTaskId = taskService.DeleteTask(deleteTaskId);
+                    Console.WriteLine($"Task deleted successfully (ID: {deletedTaskId}).");
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                break;
+                
             default:
                 Console.WriteLine("Invalid command. Use 'add' or 'list'.");
                 break;
