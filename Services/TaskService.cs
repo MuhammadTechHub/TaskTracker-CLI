@@ -64,4 +64,9 @@ public class TaskService
 
         throw new ArgumentException($"Task with ID {currentTaskId} not found.");
     }
+
+    public List<TaskItem> GetAllTasks()
+    {
+        return tasks;
+    }
 }

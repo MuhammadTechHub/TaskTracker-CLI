@@ -1,0 +1,363 @@
+# TASK TRACKER CLI — PROJECT SPECIFICATION
+
+## 1. Project Purpose
+
+This is a Roadmap.sh Task Tracker CLI project.
+
+The project has two purposes:
+
+1. Complete the Roadmap.sh Task Tracker requirements.
+2. Produce a clean and professional GitHub portfolio project while gaining practical experience with C#, .NET, CLI applications, file handling, JSON persistence, basic architecture, and Git/GitHub workflow.
+
+This is not intended to become a long-term or large-scale application.
+
+The project should be completed efficiently and should not become an unnecessary learning detour from the user's main .NET Backend course.
+
+---
+
+## 2. Primary Goal
+
+The Roadmap.sh requirements are the project's primary acceptance criteria.
+
+The implementation must satisfy the specified functionality and constraints from the Roadmap.sh Task Tracker project.
+
+Do not add unrelated features unless explicitly requested.
+
+---
+
+## 3. Roadmap.sh Requirements
+
+The application must:
+
+- Run from the command line.
+- Accept actions and inputs as command-line arguments.
+- Store tasks in a JSON file.
+- Create the JSON file if it does not exist.
+- Use the native file system capabilities of the chosen programming language.
+- Avoid external libraries or frameworks for building the project.
+- Handle errors and edge cases carefully.
+
+The user must be able to:
+
+- Add a task.
+- Update a task.
+- Delete a task.
+- Mark a task as in progress.
+- Mark a task as done.
+- List all tasks.
+- List tasks that are done.
+- List tasks that are not done.
+- List tasks that are in progress.
+
+---
+
+## 4. Task Properties
+
+Each task should contain:
+
+- id — unique identifier
+- description — short description of the task
+- status — todo, in-progress, or done
+- createdAt — date and time when the task was created
+- updatedAt — date and time when the task was last updated
+
+The JSON file must be updated when a task is added or updated.
+
+---
+
+## 5. Roadmap.sh Constraints
+
+The project should follow these constraints:
+
+- Command-line interface.
+- Positional command-line arguments.
+- JSON file persistence.
+- JSON file located in the current directory.
+- JSON file automatically created if it does not exist.
+- Native file-system capabilities.
+- No external libraries or frameworks for the core project.
+- Errors and edge cases should be handled.
+
+The project should remain simple and focused.
+
+---
+
+## 6. Technology Stack
+
+Current stack:
+
+- C#
+- .NET 10
+- Console Application
+- Visual Studio Code
+- Git
+- GitHub
+- JSON file for persistence
+
+Database is NOT part of this project.
+
+Do not introduce SQL Server, SQLite, Entity Framework, or another database.
+
+The purpose of this project is to become comfortable with file-based persistence and JSON handling.
+
+---
+
+## 7. Current Repository
+
+GitHub repository:
+
+MuhammadTechHub/TaskTracker-CLI
+
+Current main branch contains approximately:
+
+TaskTracker-CLI/
+├── Models/
+│   ├── Status.cs
+│   └── TaskItem.cs
+├── Services/
+│   └── TaskService.cs
+├── StorageBroker/
+│   ├── IJsonTaskRepository.cs
+│   └── JsonTaskRepository.cs
+├── Program.cs
+├── TaskTracker-CLI.csproj
+└── tasks.json
+
+The repository also currently contains generated build directories such as bin/Debug/net10.0 and obj. These should be reviewed and cleaned up before the final portfolio version if they should not be tracked.
+
+---
+
+## 8. Current Architecture
+
+The current project already has a basic separation between:
+
+- Models
+- Services
+- StorageBroker
+- Program.cs
+
+Current important components include:
+
+- TaskItem
+- Status
+- TaskService
+- IJsonTaskRepository
+- JsonTaskRepository
+
+The architecture must be reviewed before continuing implementation.
+
+Do not automatically preserve the current architecture if a clear design problem exists.
+
+Do not unnecessarily replace the architecture either.
+
+The goal is to make the design appropriate for a small CLI application.
+
+---
+
+## 9. Learning Objective
+
+The user does not want to study every possible C#/.NET concept through this project.
+
+Only teach concepts that are directly relevant to completing the project and understanding the implementation.
+
+Potential concepts may include:
+
+- C# classes and objects
+- properties
+- enums
+- collections
+- methods
+- interfaces
+- separation of responsibilities
+- file I/O
+- JSON serialization/deserialization
+- command-line arguments
+- exception/error handling
+- DateTime/date handling
+- basic project structure
+- basic software design
+- basic Git/GitHub workflow
+
+Do not expand this into a full C# course.
+
+The user is already studying .NET Backend development separately and wants to continue that course after completing this project.
+
+---
+
+## 10. User's Current Background
+
+The user has previously studied:
+
+- C# fundamentals through Microsoft Learn
+- C# fundamentals through freeCodeCamp
+- C#/.NET console application material
+- classes, properties and methods
+- interfaces
+- inheritance and polymorphism
+- basic ASP.NET Core/.NET material
+
+The user is currently progressing through a .NET Backend course and has reached the Sheenam section.
+
+The user's English level is approximately A2.
+
+Explanations should therefore primarily be in Uzbek while retaining English technical terminology.
+
+---
+
+## 11. Learning Workflow
+
+The project should follow a guided implementation approach.
+
+For each important task:
+
+1. Explain the relevant concept briefly.
+2. Explain what needs to be achieved.
+3. Let the user attempt the implementation.
+4. Review the implementation.
+5. Correct misunderstandings.
+6. Confirm that the user understands the important part.
+7. Move to the next task.
+
+Do not repeatedly ask the user the same questions.
+
+Do not assign many tasks at once.
+
+Do not block progress on minor details.
+
+If the user does not understand a fundamental concept required for the current step, explain that concept before moving forward.
+
+---
+
+## 12. Professional Quality
+
+The final project should look professional enough for a junior developer portfolio.
+
+Priorities:
+
+- clean structure
+- understandable code
+- meaningful names
+- sensible separation of responsibilities
+- appropriate abstractions
+- predictable behavior
+- useful error handling
+- readable README
+- clean GitHub repository
+- screenshots/demo
+- clear project structure
+
+The project does NOT need enterprise-level architecture.
+
+Avoid unnecessary:
+
+- design patterns
+- abstractions
+- interfaces
+- layers
+- frameworks
+- dependencies
+- optimizations
+
+if they do not provide a meaningful benefit.
+
+---
+
+## 13. Testing Scope
+
+Automated testing is not required for this project.
+
+Do not introduce a testing framework or turn this project into a testing exercise.
+
+Manual verification and careful edge-case checking are sufficient for this project's scope.
+
+The user will study automated testing separately in their main course.
+
+---
+
+## 14. Git/GitHub Scope
+
+The user currently has very limited Git knowledge.
+
+The project should teach the user only the Git knowledge necessary to maintain this repository professionally.
+
+Important topics:
+
+- repository state
+- staging
+- commits
+- meaningful commit messages
+- push
+- basic history
+- .gitignore
+- repository cleanup
+
+The final GitHub repository should contain:
+
+- clean source code
+- appropriate project structure
+- README.md
+- useful screenshots and/or demo
+- no unnecessary generated build artifacts
+- clear description of the project
+
+---
+
+## 15. README Goal
+
+The README should be concise and portfolio-oriented.
+
+It should explain:
+
+- what the project is
+- what it does
+- technologies used
+- main features
+- how to run it
+- available commands
+- project structure
+- screenshots/demo
+
+Do not make the README unnecessarily long.
+
+The README should demonstrate that the developer understands what they built.
+
+---
+
+## 16. Final Completion Criteria
+
+The project is considered complete only when:
+
+- all Roadmap.sh requirements are implemented;
+- important edge cases are handled;
+- architecture/design has been reviewed;
+- code is clean and understandable;
+- unnecessary files are removed from the repository;
+- .gitignore is correct;
+- README.md is complete and concise;
+- screenshots/demo are included where useful;
+- GitHub repository is presentable as a portfolio project;
+- the user understands the important parts of the implementation.
+
+After these are complete, the project should be considered finished rather than expanded with unrelated features.
+
+---
+
+## 17. Scope Boundary
+
+Do NOT add:
+
+- database
+- authentication
+- web API
+- ASP.NET Core
+- Entity Framework
+- SQLite
+- SQL Server
+- external frameworks
+- unnecessary third-party libraries
+- large feature expansions
+- automated test suites
+
+unless the user explicitly changes the project scope.
+
+The goal is a polished, focused Task Tracker CLI — not a production SaaS application.

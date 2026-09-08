@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\muham\\OneDrive\\Documents\\Projects\\TaskTracker-CLI\\TaskTracker-CLI\\TaskTracker-CLI.csproj",
+      "projectUniqueName": "C:\\Users\\muham\\OneDrive\\Documents\\Projects\\TaskTracker-CLI\\TaskTracker-CLI.csproj",
       "projectName": "TaskTracker-CLI",
-      "projectPath": "C:\\Users\\muham\\OneDrive\\Documents\\Projects\\TaskTracker-CLI\\TaskTracker-CLI\\TaskTracker-CLI.csproj",
+      "projectPath": "C:\\Users\\muham\\OneDrive\\Documents\\Projects\\TaskTracker-CLI\\TaskTracker-CLI.csproj",
       "packagesPath": "C:\\Users\\muham\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\muham\\OneDrive\\Documents\\Projects\\TaskTracker-CLI\\TaskTracker-CLI\\obj\\",
+      "outputPath": "C:\\Users\\muham\\OneDrive\\Documents\\Projects\\TaskTracker-CLI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
