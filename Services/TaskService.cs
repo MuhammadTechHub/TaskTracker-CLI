@@ -3,16 +3,16 @@ using TaskTracker_CLI.StorageBroker;
 
 namespace TaskTracker_CLI.Services;
 
-public class TaskService
+public class TaskService : ITaskService
 {
     private readonly string filePath = "tasks.json";
     private readonly IJsonTaskRepository taskRepository;
-    private List<TaskItem> tasks;
+    private List<TaskItem> taskItems;
 
     public TaskService()
     {
         this.taskRepository = new JsonTaskRepository();
-        this.tasks = taskRepository.GetAllTasks(filePath);
+        this.taskItems = taskRepository.GetAllTasks(filePath);
     }
 
     public int AddTask(string description)
@@ -20,7 +20,7 @@ public class TaskService
         TaskItem newTask = new TaskItem(description);
         int maxId = 0;
 
-        foreach (var task in tasks)
+        foreach (var task in taskItems)
         {
             if (task.Id > maxId)
             {
@@ -29,21 +29,21 @@ public class TaskService
         }
 
         newTask.Id = maxId + 1;
-        tasks.Add(newTask);
-        taskRepository.SaveTasks(filePath, tasks);
+        taskItems.Add(newTask);
+        taskRepository.SaveTasks(filePath, taskItems);
         return newTask.Id;
     }
 
     public int UpdateTask(int currentTaskId, string newDescription)
     {
-        foreach (var task in tasks)
+        foreach (var taskItem in taskItems)
         {
-            if (currentTaskId == task.Id)
+            if (currentTaskId == taskItem.Id)
             {
-                task.Description = newDescription;
-                task.UpdatedAt = DateTimeOffset.Now;
-                taskRepository.SaveTasks(filePath, tasks);
-                return task.Id;
+                taskItem.Description = newDescription;
+                taskItem.UpdatedAt = DateTimeOffset.Now;
+                taskRepository.SaveTasks(filePath, taskItems);
+                return taskItem.Id;
             }
         }
 
@@ -52,12 +52,12 @@ public class TaskService
 
     public int DeleteTask(int currentTaskId)
     {
-        for (int i = 0; i < tasks.Count; i++)
+        for (int i = 0; i < taskItems.Count; i++)
         {
-            if (currentTaskId == tasks[i].Id)
+            if (currentTaskId == taskItems[i].Id)
             {
-                tasks.RemoveAt(i);
-                taskRepository.SaveTasks(filePath, tasks);
+                taskItems.RemoveAt(i);
+                taskRepository.SaveTasks(filePath, taskItems);
                 return currentTaskId;
             }
         }
@@ -67,6 +67,45 @@ public class TaskService
 
     public List<TaskItem> GetAllTasks()
     {
-        return tasks;
+        return taskItems;
+    }
+
+    public int MarkInProgress(int taskId)
+    {
+        var taskItem = taskItems.Find(taskItem => taskItem.Id == taskId);
+
+        if (taskItem != null)
+        {
+            taskItem.Status = Status.InProgress;
+            taskItem.UpdatedAt = DateTimeOffset.Now;
+            taskRepository.SaveTasks(filePath, taskItems);
+        }
+        else
+        {
+            throw new ArgumentException($"Task with ID {taskId} not found.");
+        }
+        return taskId;
+    }
+
+    public int MarkDone(int taskId)
+    {
+        var taskItem = taskItems.Find(taskItem => taskItem.Id == taskId);
+
+        if (taskItem != null)
+        {
+            taskItem.Status = Status.Done;
+            taskItem.UpdatedAt = DateTimeOffset.Now;
+            taskRepository.SaveTasks(filePath, taskItems);
+        }
+        else
+        {
+            throw new ArgumentException($"Task with ID {taskId} not found.");
+        }
+        return taskId;
+    }
+
+    public List<TaskItem> GetTasksByStatus(Status currentStatus)
+    {
+        return taskItems.FindAll(taskItem => taskItem.Status == currentStatus);
     }
 }
