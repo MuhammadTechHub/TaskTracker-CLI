@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Task Tracker CLI
 
 A command-line application for tracking tasks. It stores task data locally in a JSON file.
@@ -50,3 +51,6 @@ TaskTracker-CLI/
 ├── Program.cs        # Command-line entry point
 └── TaskTracker-CLI.csproj
 ```
+=======
+Hello
+>>>>>>> 9b0c55c7c396ea242c64974890f605173da0c73b
