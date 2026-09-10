@@ -5,7 +5,7 @@ var taskService = new TaskService();
 
 if (args.Length == 0)
 {
-    Console.WriteLine("Please provide a command: 'add' or 'list'.");
+    Console.WriteLine("Unknown command. Please use 'add', 'update', 'delete', 'list', 'mark-in-progress', 'mark-done'.");
     return;
 }
 
@@ -73,13 +73,13 @@ switch (args[0])
         break;
 
     case "list":
-        var taskItems = taskService.GetAllTasks();
-        
         if (args.Length >= 3)
         {
             Console.WriteLine("Invalid command. The 'list' command can only have one optional argument for status.");
             return;
         }
+        
+        var taskItems = taskService.GetAllTasks();
         
         if (args.Length < 2)
         {
@@ -101,9 +101,16 @@ switch (args[0])
             break;
         }
 
-        if (!Enum.TryParse(args[1], true, out Status currentStatus))
+        string statusArg = args[1];
+
+        if (statusArg == "in-progress")
         {
-            Console.WriteLine("Invalid status. Please provide a valid status (ToDo, InProgress, Done).");
+            statusArg = "InProgress";
+        }
+
+        if (!Enum.TryParse(statusArg, true, out Status currentStatus))
+        {
+            Console.WriteLine("Invalid status. Please provide a valid status (todo, in-progress, done).");
             return;
         }
 

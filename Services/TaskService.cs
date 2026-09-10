@@ -38,7 +38,7 @@ public class TaskService : ITaskService
     {
         foreach (var taskItem in taskItems)
         {
-            if (currentTaskId == taskItem.Id)
+            if (taskItem.Id == currentTaskId)
             {
                 taskItem.Description = newDescription;
                 taskItem.UpdatedAt = DateTimeOffset.Now;
@@ -54,7 +54,7 @@ public class TaskService : ITaskService
     {
         for (int i = 0; i < taskItems.Count; i++)
         {
-            if (currentTaskId == taskItems[i].Id)
+            if (taskItems[i].Id == currentTaskId)
             {
                 taskItems.RemoveAt(i);
                 taskRepository.SaveTasks(filePath, taskItems);
